@@ -55,18 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="APache 版本 如果需要整站跳转，则在网站的配置文件的标签内，键入以下内容：  RewriteEngine on RewriteCond %{SERVER_PORT} !^443$ RewriteRule ^(.*)?$ https://%{SERVER_NAME}/$1 [L,R=301]  如果对某个目录做https强制跳转，则复制以下代码：  RewriteEngine on Rewri">
+  <meta name="description" content="APache 版本 如果需要整站跳转，则在网站的配置文件的标签内，键入以下内容： RewriteEngine on RewriteCond %{SERVER_PORT} !^443$ RewriteRule ^(.*)?$ https://%{SERVER_NAME}/$1 [L,R=301]如果对某个目录做https强制跳转，则复制以下代码： RewriteEngine on RewriteBa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Http跳转Https">
-<meta property="og:url" content="https://lmmmr9.github.io/2019/05/09/Http跳转Https/index.html">
+<meta property="og:url" content="https://lmmmr9.github.io/2019/08/29/Http跳转Https/index.html">
 <meta property="og:site_name" content="HexoIO">
-<meta property="og:description" content="APache 版本 如果需要整站跳转，则在网站的配置文件的标签内，键入以下内容：  RewriteEngine on RewriteCond %{SERVER_PORT} !^443$ RewriteRule ^(.*)?$ https://%{SERVER_NAME}/$1 [L,R=301]  如果对某个目录做https强制跳转，则复制以下代码：  RewriteEngine on Rewri">
+<meta property="og:description" content="APache 版本 如果需要整站跳转，则在网站的配置文件的标签内，键入以下内容： RewriteEngine on RewriteCond %{SERVER_PORT} !^443$ RewriteRule ^(.*)?$ https://%{SERVER_NAME}/$1 [L,R=301]如果对某个目录做https强制跳转，则复制以下代码： RewriteEngine on RewriteBa">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2019-08-29T12:53:58.949Z">
+<meta property="og:updated_time" content="2019-08-29T15:52:06.002Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Http跳转Https">
-<meta name="twitter:description" content="APache 版本 如果需要整站跳转，则在网站的配置文件的标签内，键入以下内容：  RewriteEngine on RewriteCond %{SERVER_PORT} !^443$ RewriteRule ^(.*)?$ https://%{SERVER_NAME}/$1 [L,R=301]  如果对某个目录做https强制跳转，则复制以下代码：  RewriteEngine on Rewri">
-  <link rel="canonical" href="https://lmmmr9.github.io/2019/05/09/Http跳转Https/">
+<meta name="twitter:description" content="APache 版本 如果需要整站跳转，则在网站的配置文件的标签内，键入以下内容： RewriteEngine on RewriteCond %{SERVER_PORT} !^443$ RewriteRule ^(.*)?$ https://%{SERVER_NAME}/$1 [L,R=301]如果对某个目录做https强制跳转，则复制以下代码： RewriteEngine on RewriteBa">
+  <link rel="canonical" href="https://lmmmr9.github.io/2019/08/29/Http跳转Https/">
 
 
 <script id="page-configurations">
@@ -196,7 +196,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://lmmmr9.github.io/2019/05/09/Http跳转Https/">
+    <link itemprop="mainEntityOfPage" href="https://lmmmr9.github.io/2019/08/29/Http跳转Https/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="挖了蘑菇累死">
@@ -224,19 +224,11 @@
                 
               
 
-              <time title="Erstellt: 2019-05-09 22:35:01" itemprop="dateCreated datePublished" datetime="2019-05-09T22:35:01+08:00">2019-05-09</time>
+              <time title="Erstellt: 2019-08-29 23:42:54 / Geändert am: 23:52:06" itemprop="dateCreated datePublished" datetime="2019-08-29T23:42:54+08:00">2019-08-29</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Bearbeitet am</span>
-                <time title="Geändert am: 2019-08-29 20:53:58" itemprop="dateModified" datetime="2019-08-29T20:53:58+08:00">2019-08-29</time>
-              </span>
             
           
 
@@ -253,102 +245,61 @@
       
         <p><strong>APache 版本</strong></p>
 <p>如果需要整站跳转，则在网站的配置文件的<directory>标签内，键入以下内容：</directory></p>
-<ol>
-<li>RewriteEngine on</li>
-<li>RewriteCond %{SERVER_PORT} !^443$</li>
-<li>RewriteRule ^(.*)?$ https://%{SERVER_NAME}/$1 [L,R=301]</li>
-</ol>
-<p>如果对某个目录做https强制跳转，则复制以下代码：</p>
-<ol>
-<li>RewriteEngine on</li>
-<li>RewriteBase /yourfolder</li>
-<li>RewriteCond %{SERVER_PORT} !^443$</li>
-<li>#RewriteRule ^(.*)?$ https://%{SERVER_NAME}/$1 [L,R]</li>
-<li>RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R=301]</li>
-</ol>
-<p>如果只需要对某个网页进行https跳转，可以使用redirect 301来做跳转！redirect 301  /你的网页 https://你的主机+网页</p>
-<p>## </p>
+<pre><code>RewriteEngine on
+RewriteCond %{SERVER_PORT} !^443$
+RewriteRule ^(.*)?$ https://%{SERVER_NAME}/$1 [L,R=301]</code></pre><p>如果对某个目录做https强制跳转，则复制以下代码：</p>
+<pre><code>RewriteEngine on
+RewriteBase /yourfolder
+RewriteCond %{SERVER_PORT} !^443$
+\#RewriteRule ^(.*)?$ https://%{SERVER_NAME}/$1 [L,R]
+RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R=301]</code></pre><p>如果只需要对某个网页进行https跳转，可以使用redirect 301来做跳转！redirect 301  /你的网页 https://你的主机+网页</p>
 <p><strong>Nginx版本</strong></p>
 <p>在配置80端口的文件里面，写入以下内容即可。</p>
-<ol>
-<li><p>server {</p>
-</li>
-<li><p>​        listen       80;</p>
-</li>
-<li><p>​        server_name  localhost;</p>
-</li>
-<li><p>​        rewrite ^(.*)$ https://$server_name$1 permanent;    </p>
-</li>
-<li><p>​        }</p>
-</li>
-</ol>
-<p><strong>TOMCAT 版本</strong></p>
+<pre><code>server {
+    listen 80;
+    server_name localhost;
+    rewrite ^(.*)$ https://$server_name$1 permanent;    
+}</code></pre><p><strong>TOMCAT 版本</strong></p>
 <p>1、在conf目录下的server.xml文件中找到以下配置，修改</p>
 <p>redirectPort参数值为”443”，默认是“8443”.</p>
-<ol>
-<li><connector port="80" protocol="HTTP/1.1" connectiontimeout="20000" redirectport="443">
-
-
-
-</connector></li>
-</ol>
-<p>2、在conf目录下的web.xml文件内容<web-app>……</web-app>中增加以下配置。</p>
-<ol>
-<li><web-app></web-app></li>
-<li>………</li>
-<li><security-constraint></security-constraint></li>
-<li>​    <web-resource-collection>        </web-resource-collection></li>
-<li><web-resource-name>SSL</web-resource-name>     </li>
-<li><url-pattern>/*</url-pattern></li>
-<li>​           </li>
-<li>​       <user-data-constraint></user-data-constraint></li>
-<li><transport-guarantee>CONFIDENTIAL</transport-guarantee></li>
-<li>​       </li>
-<li></li>
-<li>
-
-
-
-
-
-</li>
-</ol>
-<p><strong>单独页面通用代码段：</strong></p>
+<pre><code>&lt;Connector port=&quot;80&quot; protocol=&quot;HTTP/1.1&quot; connectionTimeout=&quot;20000&quot; redirectPort=&quot;443&quot; /&gt;</code></pre><p>2、在conf目录下的web.xml文件内容<web-app>……</web-app>中增加以下配置。</p>
+<pre><code>&lt;web-app&gt;
+.........
+    &lt;security-constraint&gt;
+        &lt;web-resource-collection &gt;        
+            &lt;web-resource-name &gt;SSL&lt;/web-resource-name&gt;     
+            &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+        &lt;/web-resource-collection&gt;    
+        &lt;user-data-constraint&gt;
+            &lt;transport-guarantee&gt;CONFIDENTIAL&lt;/transport-guarantee&gt;
+        &lt;/user-data-constraint&gt;
+    &lt;/security-constraint&gt;
+&lt;/web-app&gt;</code></pre><p><strong>单独页面通用代码段：</strong></p>
 <p>以下方法较适合指定某一个子页单独https<br>在需要强制为https的页面上加入以下代码进行处理</p>
 <p>http–&gt;https</p>
-<ol>
-<li><script type="text/javascript"></li>
-<li>​        var url = window.location.href;</li>
-<li>​        if (url.indexOf(“https”) &lt; 0) {</li>
-<li>​        url = url.replace(“http:”, “https:”);</li>
-<li>​        window.location.replace(url);</li>
-<li>​        }</li>
-<li></script></li>
-</ol>
-<p>在需要强制为http的页面上加入以下代码进行处理<br>https–&gt;http</p>
-<ol>
-<li><script language="JavaScript" type="text/JavaScript"></li>
-<li>function redirect()</li>
-<li>{  </li>
-<li>var loc = location.href.split(‘:’);</li>
-<li>if(loc[0]==’https’)</li>
-<li>​        {  </li>
-<li>​        location.href=’http:’+loc[1];  </li>
-<li>​        }</li>
-<li>}                      </li>
-<li>onload=redirect  </li>
-<li></script> </li>
-<li></li>
-</ol>
-<p><strong>PHP页面跳转：</strong>添加在网站php页面内</p>
-<ol>
-<li>if ($_SERVER[“HTTPS”] &lt;&gt; “on”) </li>
-<li>{ </li>
-<li>$xredir=”https://“.$_SERVER[“SERVER_NAME”].$_SERVER[“REQUEST_URI”]; </li>
-<li>header(“Location: “.$xredir); </li>
-<li>}</li>
-</ol>
-
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+    var url = window.location.href;
+    if (url.indexOf(&quot;https&quot;) &lt; 0) {
+        url = url.replace(&quot;http:&quot;, &quot;https:&quot;);
+        window.location.replace(url);
+    }
+&lt;/script&gt;</code></pre><p>在需要强制为http的页面上加入以下代码进行处理<br>https–&gt;http</p>
+<pre><code>&lt;script language=&quot;JavaScript&quot; type=&quot;text/JavaScript&quot;&gt;
+    function redirect()
+    {  
+        var loc = location.href.split(&apos;:&apos;);
+        if(loc[0]==&apos;https&apos;)
+            {  
+                location.href=&apos;http:&apos;+loc[1];  
+            }
+    }                      
+    onload=redirect  
+&lt;/script&gt;  </code></pre><p><strong>PHP页面跳转：</strong>添加在网站php页面内</p>
+<pre><code>if ($_SERVER[&quot;HTTPS&quot;] &lt;&gt; &quot;on&quot;) 
+{ 
+    $xredir=&quot;https://&quot;.$_SERVER[&quot;SERVER_NAME&quot;].$_SERVER[&quot;REQUEST_URI&quot;]; 
+    header(&quot;Location: &quot;.$xredir); 
+}</code></pre>
     </div>
 
     
@@ -364,15 +315,15 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
+                <a href="/2019/06/09/cloudflare防护cc的方法/" rel="next" title="cloudflare防护cc的方法">
+                  <i class="fa fa-chevron-left"></i> cloudflare防护cc的方法
+                </a>
+              
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2019/06/09/cloudflare防护cc的方法/" rel="prev" title="cloudflare防护cc的方法">
-                  cloudflare防护cc的方法 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
