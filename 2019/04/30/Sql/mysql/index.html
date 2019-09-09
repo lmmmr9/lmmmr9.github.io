@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Kopieren',
+      copy_success: 'Kopiert',
+      copy_failure: 'Kopieren fehlgeschlagen'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="基础 查看所有数据库show databases;  使用数据库use 数据库名;  查看当前使用的数据库select database();  创建数据库create database 数据库名 charset=utf8;  删除数据库drop database 数据库名;  查看当前数据库中所有表show tables;  查看表结构desc 表名;  创建表—auto_increment表示">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HexoIO">
+<meta property="og:url" content="https://lmmmr9.github.io/2019/04/30/Sql/mysql/index.html">
+<meta property="og:site_name" content="HexoIO">
+<meta property="og:description" content="基础 查看所有数据库show databases;  使用数据库use 数据库名;  查看当前使用的数据库select database();  创建数据库create database 数据库名 charset=utf8;  删除数据库drop database 数据库名;  查看当前数据库中所有表show tables;  查看表结构desc 表名;  创建表—auto_increment表示">
+<meta property="og:locale" content="zh">
+<meta property="og:updated_time" content="2019-04-30T04:06:07.956Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HexoIO">
+<meta name="twitter:description" content="基础 查看所有数据库show databases;  使用数据库use 数据库名;  查看当前使用的数据库select database();  创建数据库create database 数据库名 charset=utf8;  删除数据库drop database 数据库名;  查看当前数据库中所有表show tables;  查看表结构desc 表名;  创建表—auto_increment表示">
+  <link rel="canonical" href="https://lmmmr9.github.io/2019/04/30/Sql/mysql/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title> | HexoIO</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HexoIO</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Navigationsleiste an/ausschalten">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://lmmmr9.github.io/2019/04/30/Sql/mysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Walemoguless">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HexoIO">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-04-30 11:33:34 / Geändert am: 12:06:07" itemprop="dateCreated datePublished" datetime="2019-04-30T11:33:34+08:00">2019-04-30</time>
+            </span>
+          
+            
+
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><ul>
+<li><p>查看所有数据库<br><code>show databases;</code></p>
+</li>
+<li><p>使用数据库<br><code>use 数据库名;</code></p>
+</li>
+<li><p>查看当前使用的数据库<br><code>select database();</code></p>
+</li>
+<li><p>创建数据库<br><code>create database 数据库名 charset=utf8;</code></p>
+</li>
+<li><p>删除数据库<br><code>drop database 数据库名;</code></p>
+</li>
+<li><p>查看当前数据库中所有表<br><code>show tables;</code></p>
+</li>
+<li><p>查看表结构<br><code>desc 表名;</code></p>
+</li>
+<li><p>创建表—auto_increment表示自动增长</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE table_name(</span><br><span class="line">       column1 datatype contrai,</span><br><span class="line">       column2 datatype,</span><br><span class="line">       column3 datatype,</span><br><span class="line">       .....</span><br><span class="line">       columnN datatype,</span><br><span class="line">       PRIMARY KEY(one or more columns)</span><br><span class="line">   );</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>例：创建班级表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">create table classes(</span><br><span class="line">       id int  unsigned auto_increment primary key not null,</span><br><span class="line">       name varchar(10)</span><br><span class="line">   );</span><br></pre></td></tr></table></figure>
+
+<p>例：创建学生表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">create table students(</span><br><span class="line">       id int unsigned primary key auto_increment not null,</span><br><span class="line">       name varchar(20) default &apos;&apos;,</span><br><span class="line">       age tinyint unsigned default  0,</span><br><span class="line">       height decimal(5,2),</span><br><span class="line">       gender enum(&apos;男&apos;,&apos;女&apos;,&apos;人妖&apos;,&apos;保密&apos;),</span><br><span class="line">       cls_id int unsigned default  0</span><br><span class="line">   )</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>修改表-添加字段<br><code>alter table 表名 add 列名 类型;</code><br>例：<br><code>alter  table  students add birthday datetime;</code></p>
+</li>
+<li><p>修改表-修改字段：重命名版<br><code>alter table 表名 change 原名 新名  类型及约束;</code><br>例：<br><code>alter  table  students change birthday birth datetime not null;</code></p>
+</li>
+<li><p>修改表-修改字段：不重命名版<br><code>alter table 表名 modify 列名  类型及约束;</code><br>例：<br><code>alter  table  students modify birth date not null;</code></p>
+</li>
+<li><p>修改表-删除字段<br><code>alter table 表名 drop 列名;</code></p>
+</li>
+<li><p>删除表<br><code>drop table 表名;</code></p>
+</li>
+<li><p>查看表的创建语句<br><code>show create table 表名;</code></p>
+</li>
+</ul>
+<h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><ul>
+<li><p>查询所有列<br><code>select * from 表名;</code><br>例：<br><code>select * from classes;</code></p>
+</li>
+<li><p>查询指定列<br>可以使用as为列或表指定别名<br><code>select 列1,列2,... from 表名;</code><br>例：<br><code>select  id,name from classes;</code></p>
+</li>
+</ul>
+<h2 id="增加"><a href="#增加" class="headerlink" title="增加"></a>增加</h2><p>格式:INSERT  [INTO] tb<strong>_</strong>name [(col<strong>_</strong>name,…)] {VALUES | VALUE} ({expr |  DEFAULT},…),(…),…<br> 说明：主键列是自动增长，但是在全列插入时需要占位，通常使用0或者       default 或者 null 来占位，插入成功后以实际数据为准</p>
+<ul>
+<li><p>全列插入：值的顺序与表中字段的顺序对应<br><code>insert into 表名 values(...)</code><br>例：<br><code>insert  into  students values(0,’郭靖‘,1,&#39;蒙古&#39;,&#39;2016-1-2&#39;);</code></p>
+</li>
+<li><p>部分列插入：值的顺序与给出的列顺序对应<br><code>insert into 表名(列1,...) values(值1,...)</code><br>例：<br><code>insert  into  students(name,hometown,birthday) values(&#39;黄蓉&#39;,&#39;桃花岛&#39;,&#39;2016-3-2&#39;);</code><br>上面的语句一次可以向表中插入一行数据，还可以一次性插入多行数据，这样可以减少与数据库的通信</p>
+</li>
+<li><p>全列多行插入：值的顺序与给出的列顺序对应<br><code>insert into 表名 values(...),(...)...;</code><br>例：<br><code>insert  into  classes values(0,&#39;python1&#39;),(0,&#39;python2&#39;);</code></p>
+</li>
+<li><p><code>insert into 表名(列1,...) values(值1,...),(值1,...)...;</code><br>例：<br><code>insert  into  students(name) values(&#39;杨康&#39;),(&#39;杨过&#39;),(&#39;小龙女&#39;);</code></p>
+</li>
+</ul>
+<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>格式: <strong>UPDATE</strong> <strong><em>tbname</em></strong> <strong>SET  col1={expr1|DEFAULT} [,col2={expr2|default}]…[where 条件判断]</strong></p>
+<ul>
+<li><code>update 表名 set 列1=值1,列2=值2... where 条件</code><br>例：<br><code>update students set gender=0,hometown=&#39;北京&#39; where id=5;</code></li>
+</ul>
+<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><ul>
+<li><p><strong>DELETE FROM tbname [where 条件判断]</strong><br><code>delete from 表名 where 条件</code><br>例：<br><code>delete  from  students where id=5;</code></p>
+</li>
+<li><p>逻辑删除，本质就是修改操作<br><code>update students set  isdelete=1 where  id=1;</code></p>
+</li>
+<li><p>运行mysqldump命令<br><code>mysqldump –uroot –p 数据库名 &gt; python.sql;</code><br># 按提示输入mysql的密码</p>
+</li>
+</ul>
+<h2 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h2><p>连接mysql，创建新的数据库<br>退出连接，执行如下命令<br><code>mysql -uroot –p 新数据库名 &lt; python.sql</code></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/04/30/Sql/ERROR 1698 (28000)/" rel="next" title="">
+                  <i class="fa fa-chevron-left"></i> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/05/01/JavaScriptNote/节点/" rel="prev" title="">
+                   <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Inhaltsverzeichnis
+        </li>
+        <li class="sidebar-nav-overview">
+          Übersicht
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询"><span class="nav-number">2.</span> <span class="nav-text">查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#增加"><span class="nav-number">3.</span> <span class="nav-text">增加</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改"><span class="nav-number">4.</span> <span class="nav-text">修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除"><span class="nav-number">5.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#恢复"><span class="nav-number">6.</span> <span class="nav-text">恢复</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Walemoguless</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">Artikel</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walemoguless</span>
+</div>
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/muse.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

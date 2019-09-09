@@ -55,14 +55,18 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
+  <meta name="description" content="多进程下socket的问题子进程与主进程共享一个fd文件描述符 当创建子进程时，系统复制主进程的资源，但是子进程和主进程都指向同一个fd 因此需要主线程也关闭Socket 线程和协程则不存在这种问题 epoll来说说后台服务模型：  迭代服务器 简单说，就是在while中循环accept, 然后处理。显然， 这种服务是没有并发功能的， 后一个请求必须等前一个请求处理完毕， 才会被处理。    多线">
+<meta property="og:type" content="article">
 <meta property="og:title" content="HexoIO">
-<meta property="og:url" content="https://lmmmr9.github.io/archives/2019/08/index.html">
+<meta property="og:url" content="https://lmmmr9.github.io/2019/04/30/PythonNote/web服务器/index.html">
 <meta property="og:site_name" content="HexoIO">
+<meta property="og:description" content="多进程下socket的问题子进程与主进程共享一个fd文件描述符 当创建子进程时，系统复制主进程的资源，但是子进程和主进程都指向同一个fd 因此需要主线程也关闭Socket 线程和协程则不存在这种问题 epoll来说说后台服务模型：  迭代服务器 简单说，就是在while中循环accept, 然后处理。显然， 这种服务是没有并发功能的， 后一个请求必须等前一个请求处理完毕， 才会被处理。    多线">
 <meta property="og:locale" content="zh">
+<meta property="og:updated_time" content="2019-04-30T04:06:29.380Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HexoIO">
-  <link rel="canonical" href="https://lmmmr9.github.io/archives/2019/08/">
+<meta name="twitter:description" content="多进程下socket的问题子进程与主进程共享一个fd文件描述符 当创建子进程时，系统复制主进程的资源，但是子进程和主进程都指向同一个fd 因此需要主线程也关闭Socket 线程和协程则不存在这种问题 epoll来说说后台服务模型：  迭代服务器 简单说，就是在while中循环accept, 然后处理。显然， 这种服务是没有并发功能的， 后一个请求必须等前一个请求处理完毕， 才会被处理。    多线">
+  <link rel="canonical" href="https://lmmmr9.github.io/2019/04/30/PythonNote/web服务器/">
 
 
 <script id="page-configurations">
@@ -70,13 +74,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
-    isArchive: true
+    isArchive: false
   };
 </script>
 
-  <title>Archiv | HexoIO</title>
+  <title> | HexoIO</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -169,18 +173,6 @@
 
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 </nav>
 </div>
     </header>
@@ -198,66 +190,127 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        
-        
-        
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://lmmmr9.github.io/2019/04/30/PythonNote/web服务器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Walemoguless">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HexoIO">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+
           
-        
-        <span class="collection-header">Öhm..! Insgesamt 27 Artikel. Bleib dran.</span>
-      </div>
-      
+        </h1>
 
-      
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
 
-  
-  
+              
+                
+              
 
-  
+              <time title="Erstellt: 2019-04-30 11:20:57 / Geändert am: 12:06:29" itemprop="dateCreated datePublished" datetime="2019-04-30T11:20:57+08:00">2019-04-30</time>
+            </span>
+          
+            
+
+            
+          
+
+          
+
+        </div>
+      </header>
+
     
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="多进程下socket的问题"><a href="#多进程下socket的问题" class="headerlink" title="多进程下socket的问题"></a>多进程下socket的问题</h2><p>子进程与主进程共享一个fd文件描述符</p>
+<p>当创建子进程时，系统复制主进程的资源，但是子进程和主进程都指向同一个fd</p>
+<p>因此需要主线程也关闭Socket</p>
+<p>线程和协程则不存在这种问题</p>
+<h2 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h2><p>来说说后台服务模型：</p>
+<ol>
+<li><p>迭代服务器</p>
+<p>简单说，就是在while中循环accept, 然后处理。显然， 这种服务是没有并发功能的， 后一个请求必须等前一个请求处理完毕， 才会被处理。</p>
+</li>
+</ol>
+<ol start="2">
+<li><p>多线程模型</p>
+<p>简单说， 在while循环中循环accept,  然后开启线程来应对每一个请求， 而非在主线程执行阻塞处理操作， 让后一个请求苦苦等待。此时，服务有了并发处理能力。 (实际中的服务， 肯定不会为每个请求都搞一个线程的)</p>
+<ol start="3">
+<li>多进程模型</li>
+</ol>
+<p>简单说， 就是在父进程中循环accept,  然后开启子进程来应对每一个请求， 而非在主进程执行阻塞处理操作，让后一个请求苦苦等待。此时，服务有了并发处理能力。(实际中的服务， 肯定不会为每个请求都搞一个进程的)</p>
+<ol start="4">
+<li>select/poll/epoll</li>
+</ol>
+<p>确实有很多地方说select/poll/epoll并发， 这是多么扯淡啊， 它们不过是多路复用， 而已。 很多网上程序给出的epoll代码实现的服务器， 其实是没有并发能力的， 也仅仅是迭代服务器。</p>
+<p>select/poll/epoll的作用是IO复用， 要实现并发， 还是需要交个其他线程/进程去处理。 业界很多成熟的服务组件， 就是这么玩的, 如nginx.</p>
+</li>
+</ol>
+<p>所以，再说一次， select/poll/epoll没有并发能力， 仅仅是IO多路复用而已。 </p>
+<p>那么，IO复用， 复用的是什么呢？ 复用的是， 同一个线程！！！</p>
+
     </div>
-  
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
+    
+    
+    
         
-          <a class="post-title-link" href="/2019/08/29/Http跳转Https/" itemprop="url">
-            <span itemprop="name">Http跳转Https</span>
-          </a>
+      
+
+      <footer class="post-footer">
+
         
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-08-29T23:42:54+08:00"
-              content="2019-08-29">
-          08-29
-        </time>
-      </div>
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/04/30/PythonNote/基础/" rel="next" title="">
+                  <i class="fa fa-chevron-left"></i> 
+                </a>
+              
+            </div>
 
-    </header>
-  </article>
+            <span class="post-nav-divider"></span>
 
-
-
-
-    </div>
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/04/30/Sql/ERROR 1698 (28000)/" rel="prev" title="">
+                   <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
   </div>
   
   
   
+  </article>
 
-  
-
+  </div>
 
 
           </div>
@@ -276,6 +329,11 @@
 
   <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -288,6 +346,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#多进程下socket的问题"><span class="nav-number">1.</span> <span class="nav-text">多进程下socket的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#epoll"><span class="nav-number">2.</span> <span class="nav-text">epoll</span></a></li></ol></div>
+        
       </div>
       <!--/noindex-->
 
